@@ -17,7 +17,7 @@ export const cartSlice = createSlice({
       const productToAdd = action.payload.product;
       const quantity = action.payload.num;
       const productExit = state.cartList.find(
-        (item) => item.id === productToAdd.id
+        (item) => item._id === productToAdd._id
       );
       if (productExit) {
         state.cartList = state.cartList.map((item) =>
@@ -49,7 +49,7 @@ export const cartSlice = createSlice({
     deleteProduct: (state, action) => {
       const productToDelete = action.payload;
       state.cartList = state.cartList.filter(
-        (item) => item.id !== productToDelete.id
+        (item) => item._id !== productToDelete._id
       );
     },
   },

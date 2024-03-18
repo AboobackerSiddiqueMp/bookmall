@@ -6,6 +6,10 @@ import Footer from "./components/Footer/Footer";
 import Loader from "./components/Loader/Loader";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import SellBooks from "./pages/SellBooks";
+import Myshop from "./pages/Myshop";
 const Home = lazy(() => import("./pages/Home"));
 const Shop = lazy(() => import("./pages/Shop"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -25,14 +29,32 @@ function App() {
           pauseOnHover
           theme="light"
         />
-        <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/shop/:id" element={<Product />} />
+          <Route path="/products" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login></Login>} />
+          <Route path="/register" element={<Register></Register>} />
+          <Route path="/sellbooks" element={<SellBooks></SellBooks>} />
+          <Route path="/myshop" element={<Myshop></Myshop>} />
+
+
+
+
+
+          
+
+
+
+
         </Routes>
-        <Footer />
+        <Routes>
+
+
+
+        </Routes>
+
       </Router>
     </Suspense>
   );

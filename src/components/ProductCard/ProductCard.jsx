@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../app/features/cart/cartSlice";
+import { BASE_URL } from "../../services/baseurl"
+
 
 const ProductCard = ({ title, productItem }) => {
+const navigate=useNavigate()
   const dispatch = useDispatch();
   const router = useNavigate();
   const handelClick = () => {
-    router(`/shop/${productItem.id}`);
+    navigate('/products', { state: { productItem } });
   };
   const handelAdd = (productItem) => {
     dispatch(addToCart({ product: productItem, num: 1 }));
@@ -17,20 +20,17 @@ const ProductCard = ({ title, productItem }) => {
   };
   return (
     <Col md={3} sm={5} xs={10} className="product mtop">
-      {title === "Big Discount" ? (
-        <span className="discount">{productItem.discount}% Off</span>
-      ) : null}
+      
       <img
         loading="lazy"
         onClick={() => handelClick()}
-        src={productItem.imgUrl}
+        src={`${BASE_URL}/uploads/${productItem.bookimage}`}
         alt=""
       />
       <div className="product-like">
-        <ion-icon name="heart-outline"></ion-icon>
       </div>
       <div className="product-details">
-        <h3 onClick={() => handelClick()}>{productItem.productName}</h3>
+        <h3 onClick={''}>{productItem.title}</h3>
         <div className="rate">
           <i className="fa fa-star"></i>
           <i className="fa fa-star"></i>
@@ -44,7 +44,7 @@ const ProductCard = ({ title, productItem }) => {
             aria-label="Add"
             type="submit"
             className="add"
-            onClick={() => handelAdd(productItem)}
+            onClick={(e)=>handelAdd(productItem)}
           >
             <ion-icon name="add"></ion-icon>
           </button>

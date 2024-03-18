@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { addToCart } from "../../app/features/cart/cartSlice";
 import "./product-details.css";
+import { BASE_URL } from "../../services/baseurl";
 
 const ProductDetails = ({ selectedProduct }) => {
   const dispatch = useDispatch();
@@ -22,23 +23,14 @@ const ProductDetails = ({ selectedProduct }) => {
       <Container>
         <Row className="justify-content-center">
           <Col md={6}>
-            <img loading="lazy" src={selectedProduct?.imgUrl} alt="" />
+            <img loading="lazy" src={`${BASE_URL}/uploads/${selectedProduct.bookimage}`} alt="" />
           </Col>
           <Col md={6}>
-            <h2>{selectedProduct?.productName}</h2>
-            <div className="rate">
-              <div className="stars">
-                <i className="fa fa-star"></i>
-                <i className="fa fa-star"></i>
-                <i className="fa fa-star"></i>
-                <i className="fa fa-star"></i>
-                <i className="fa fa-star"></i>
-              </div>
-              <span>{selectedProduct?.avgRating} ratings</span>
-            </div>
+            <h2>{selectedProduct?.title}</h2>
+           
             <div className="info">
               <span className="price">${selectedProduct?.price}</span>
-              <span>category:{selectedProduct?.category}</span>
+              <span>category:{selectedProduct?.genres}</span>
             </div>
             <p>{selectedProduct?.shortDesc}</p>
             <input
