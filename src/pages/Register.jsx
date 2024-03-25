@@ -100,7 +100,7 @@ const LoginForm = () => {
           <div className="footer-link padding-top--24">
             <div className="listing padding-top--24 padding-bottom--24 flex-flex center-center">
               <span><a href="#">© Stackfindover</a></span>
-              <span><a href="#">Contact</a></span>
+              <span><a href="#">Contacts</a></span>
               <span><a href="#">Privacy & terms</a></span>
             </div>
           </div>
