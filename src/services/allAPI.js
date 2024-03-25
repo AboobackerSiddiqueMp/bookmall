@@ -28,4 +28,14 @@ export const getenglishAPI =async() =>{
 export const getSearchAPI =async(bookSearch,reqHeader) =>{
     return await commonAPI("GET",`${BASE_URL}/books/getSearchbook?search=${bookSearch}`,"",reqHeader)
 }
+export const addBuyedbooksAPI= async(reqBody,reqHeader)=>{
+
+    return await commonAPI("post",`${BASE_URL}/buy/addbuybook`,reqBody,reqHeader)
+
+}
+export const getbuydAPI =async(reqHeader) =>{
+    return await commonAPI("GET",`${BASE_URL}/buy/getbuydbook`,"",reqHeader)
+}
+
+
 

@@ -10,6 +10,8 @@ const NavBar = () => {
   const { cartList } = useSelector((state) => state.cart);
   const [expand, setExpand] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
+  const [gettoken,setgettoken]=useState('')
+
   // fixed Header
   function scrollHandler() {
     if (window.scrollY >= 100) {
@@ -38,6 +40,19 @@ const NavBar = () => {
 
 
   }, [])
+  useEffect(() => {
+
+
+    const tokenvalue = sessionStorage.getItem("token")
+    console.log('jjjj', tokenvalue)
+    setgettoken(tokenvalue)
+    console.log("abus=========", gettoken)
+}, [])
+const handileclick=()=>{
+  sessionStorage.removeItem("token")
+  sessionStorage.removeItem("existinguser")
+
+}
 
   return (
     <Navbar
@@ -109,7 +124,7 @@ const NavBar = () => {
               <Link
                 aria-label="Go to Shop Page"
                 className="navbar-link"
-                to="/shop"
+                to={gettoken?"/shop":"/login"}
                 onClick={() => setExpand(false)}
               >
                 <span className="nav-link-label">Shop</span>
@@ -121,7 +136,7 @@ const NavBar = () => {
             <Nav.Item className="expanded-cart">
         <Link
                 aria-label="Go to Cart Page"
-                to="/cart"
+                to={gettoken?"/cart":"/login"}
                 className="cart"
                 data-num={cartList.length}
               >
@@ -136,7 +151,7 @@ const NavBar = () => {
               </Link>
             </Nav.Item>
             <Nav.Item>
-              <Link to="/sellbooks">
+              <Link to={gettoken?"/sellbooks":"/login"}>
                 <div className="sellMenu">
                   <SellButton></SellButton>
                   <div className="sellMenuContent">
@@ -150,7 +165,7 @@ const NavBar = () => {
               <Link
                 aria-label="Go to english Page"
                 className="navbar-link"
-                to="/myshop"
+                to={gettoken?"/myshop":"/login"}
                 onClick={() => setExpand(false)}
               >
                 <span className="nav-link-label"><i class="fa-solid fa-shop" style={{ fontSize: '25px' }}></i></span>
@@ -161,7 +176,7 @@ const NavBar = () => {
                 username?
 
                 <Link aria-label="Go to login Page"
-                  to="/login"
+                  to="/login" onClick={handileclick}
                 >
                  <h5 style={{color:'blue'}}>{username}</h5>
                     <path

@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SellBooks from "./pages/SellBooks";
 import Myshop from "./pages/Myshop";
+import Buyedbooks from "./pages/Buyedbooks";
 const Home = lazy(() => import("./pages/Home"));
 const Shop = lazy(() => import("./pages/Shop"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -38,6 +39,8 @@ function App() {
           <Route path="/register" element={<Register></Register>} />
           <Route path="/sellbooks" element={<SellBooks></SellBooks>} />
           <Route path="/myshop" element={<Myshop></Myshop>} />
+          <Route path="/buyd" element={<Buyedbooks></Buyedbooks>} />
+
 
 
 

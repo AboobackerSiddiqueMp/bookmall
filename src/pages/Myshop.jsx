@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,80 +8,76 @@ import {
 } from "../app/features/cart/cartSlice";
 import NavBar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
+import { getbuydAPI } from "../services/allAPI";
+import { BASE_URL } from "../services/baseurl";
+
 function Myshop() {
     const { cartList } = useSelector((state) => state.cart);
+    const [buydata, setbuydata] = useState([]);
     const dispatch = useDispatch();
-    // middlware to localStorage
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+      getbuyd();
+    }, []);
+
+    const getbuyd = async () => {
+      try {
+        const tokenvalue = sessionStorage.getItem("token");
+        const reqheader = {
+            "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${tokenvalue}`
+        };
+        const result = await getbuydAPI(reqheader);
+        setbuydata(result.data);
+      } catch (error) {
+        console.error("Error fetching buydata:", error);
+      }
+    };
+
     const totalPrice = cartList.reduce(
       (price, item) => price + item.qty * item.price,
       0
     );
-    useEffect(() => {
-      window.scrollTo(0, 0);
-      // if(CartItem.length ===0) {
-      //   const storedCart = localStorage.getItem("cartItem");
-      //   setCartItem(JSON.parse(storedCart));
-      // }
-    }, []);
-  return (
-    <>
-    <NavBar></NavBar>
-    <section className="cart-items">
-      <Container>
 
-        <Row className="justify-content-center">
-          
-          <Col md={8}>
-            {cartList.length === 0 && (
-              <h1 className="no-items product">No Items are add in Cart</h1>
-            )}
-            {cartList.map((item) => {
-              const productQty = item.price * item.qty;
-              return (
-                <div className="cart-list" key={item.id}>
-                  <Row>
-                    <Col className="image-holder" sm={4} md={3}>
-                      <img src={item.imgUrl} alt="" />
-                    </Col>
-                    <Col sm={8} md={9}>
-                      <Row className="cart-content justify-content-center">
-                        <Col xs={12} sm={9} className="cart-details">
-                          <h3>{item.productName}</h3>
-                          <h4>
-                            ${item.price}.00 * {item.qty}
-                            <span>${productQty}.00</span>
-                          </h4>
+    return (
+      <>
+        <NavBar />
+        <section className="cart-items">
+          <Container>
+            <Row className="justify-content-center">
+              <Col md={8}>
+                {buydata.length === 0 && (
+                  <h1 className="no-items product">No Item are added to Cart</h1>
+                )}
+                {buydata.map((item) => {
+                  return (
+                    <div className="cart-list" key={item.id}>
+                      <Row>
+                        <Col className="image-holder" sm={4} md={3}>
+                          <img src={`${BASE_URL}/uploads/${item.bookimage}`} alt="" />
                         </Col>
-                        <Col xs={12} sm={3} className="cartControl">
-                         
+                        <Col sm={8} md={9}>
+                          <Row className="cart-content justify-content-center">
+                            <Col xs={12} sm={9} className="cart-details">
+                              <h3>{item.title}</h3>
+                              <h4>${item.price}</h4>
+                            </Col>
+                            <Col xs={12} sm={3} className="cartControl"></Col>
+                          </Row>
                         </Col>
+                       
                       </Row>
-                    </Col>
-                    <button
-                      className="delete"
-                      onClick={() => dispatch(deleteProduct(item))}
-                    >
-                      <ion-icon name="close"></ion-icon>
-                    </button>
-                  </Row>
-                </div>
-              );
-            })}
-          </Col>
-          <Col md={4}>
-            <div className="cart-total">
-              <h2>Cart Summary</h2>
-              <div className=" d_flex">
-                <h4>Total Price :</h4>
-                <h3>${totalPrice}.00</h3>
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </section>
-    <Footer></Footer></>
-  )
+                    </div>
+                  );
+                })}
+              </Col>
+            </Row>
+          </Container>
+        </section>
+        <Footer />
+      </>
+    );
 }
 
-export default Myshop
+export default Myshop;

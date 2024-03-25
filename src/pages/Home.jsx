@@ -20,8 +20,6 @@ const Home = () => {
   useWindowScrollToTop();
 
   const getalldata = async () => {
-    if (sessionStorage.getItem("token")) {
-      const tokenvalue = sessionStorage.getItem("token");
       try {
         const result = await getAllbooksAPI();
         setData(result?.data);
@@ -30,12 +28,10 @@ const Home = () => {
       } finally {
         setLoadingData(false);
       }
-    }
+    
   };
 
   const getManga = async () => {
-    if (sessionStorage.getItem("token")) {
-      const tokenvalue = sessionStorage.getItem("token");
       try {
         const result = await getmangaAPI();
         setManga(result?.data);
@@ -44,11 +40,9 @@ const Home = () => {
       } finally {
         setLoadingManga(false);
       }
-    }
+    
   };
   const getEnglishbook = async () => {
-    if (sessionStorage.getItem("token")) {
-      const tokenvalue = sessionStorage.getItem("token");
       try {
         const result = await getenglishAPI();
         setenglish(result?.data);
@@ -57,8 +51,7 @@ const Home = () => {
       } finally {
         setLoadingManga(false);
       }
-    }
-  };
+      };
 
   useEffect(() => {
     getalldata();

@@ -1,44 +1,46 @@
+import React from 'react'
 import { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addToCart,
-  decreaseQty,
-  deleteProduct,
-} from "../app/features/cart/cartSlice";
+
 import NavBar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import { BASE_URL } from "../services/baseurl";
+import { getbuydAPI } from '../services/allAPI';
 
-const Cart = () => {
-  const { cartList } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  // middlware to localStorage
-  const totalPrice = cartList.reduce(
-    (price, item) => price + item.qty * item.price,
-    0
-  );
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    // if(CartItem.length ===0) {
-    //   const storedCart = localStorage.getItem("cartItem");
-    //   setCartItem(JSON.parse(storedCart));
-    // }
-  }, []);
+
+function Buyedbooks() {
+    const getBuyedbooks=async()=>{
+        console.log("resukjhdshjdfh")
+        const tokenvalue = sessionStorage.getItem("token")
+        const reqheader = {
+            "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${tokenvalue}`
+        };
+    
+    
+        const result=await getbuydAPI(reqheader)
+        console.log("buyres=======",result)
+    
+    }
+    useEffect(()=>{
+
+    getBuyedbooks()
+    
+    },[])
   return (
-
-    <>
-    <NavBar></NavBar>
+    <div>
+        <NavBar></NavBar>
     <section className="cart-items">
       <Container>
 
         <Row className="justify-content-center">
           
           <Col md={8}>
-            {cartList.length === 0 && (
+            {/* {cartList.length === 0 && (
               <h1 className="no-items product">No Items are add in Cart</h1>
-            )}
-            {cartList.map((item) => {
+            )} */}
+            {''.map((item) => {
               const productQty = item.price * item.qty;
               return (
                 <div className="cart-list" key={item.id}>
@@ -60,12 +62,7 @@ const Cart = () => {
                         </Col>
                       </Row>
                     </Col>
-                    <button
-                      className="delete"
-                      onClick={() => dispatch(deleteProduct(item))}
-                    >
-                      <ion-icon name="close"></ion-icon>
-                    </button>
+
                   </Row>
                 </div>
               );
@@ -76,15 +73,17 @@ const Cart = () => {
               <h2>Cart Summary</h2>
               <div className=" d_flex">
                 <h4>Total Price :</h4>
-                <h3>{totalPrice}.00</h3>
+                <h3>.00</h3>
               </div>
             </div>
           </Col>
         </Row>
       </Container>
     </section>
-    <Footer></Footer></>
-  );
-};
+    <Footer></Footer>
 
-export default Cart;
+    </div>
+  )
+}
+
+export default Buyedbooks
